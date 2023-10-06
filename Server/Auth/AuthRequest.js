@@ -1,7 +1,14 @@
 const axios = require('axios')
+const path = require('path')
+require('dotenv').config({
+    path: path.resolve(__dirname, '../../.env')
+})
+
+
+const host = process.env.AUTH_HOST
 
 async function LoginReq(username,password) {
-    let authResponse = await axios.post("http://127.0.0.1:5000/Login",
+    let authResponse = await axios.post(host + "Login",
     {
         UserName:username,
         Password:password
