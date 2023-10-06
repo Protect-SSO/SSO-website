@@ -8,7 +8,7 @@ require('dotenv').config({
 const host = process.env.AUTH_HOST
 
 async function LoginReq(username,password) {
-    let authResponse = await axios.post(host + "Login",
+    let authResponse = await axios.post(host + "Auth/Login",
     {
         UserName:username,
         Password:password
