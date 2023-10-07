@@ -8,16 +8,45 @@ require('dotenv').config({
 const host = process.env.AUTH_HOST
 
 async function LoginReq(username,password) {
+    //request made to Auth API to Login a user
+
+    //request
     let authResponse = await axios.post(host + "Auth/Login",
-    {
+    {//json payload
         UserName:username,
         Password:password
     }).then(function(response) {
+        //response from server
         return response.data
     }).catch(function(error){
+        //if error happens
         return error
     }); 
+    //return response
     return authResponse
 }
 
-module.exports = {LoginReq}
+async function OrgRegisterReq(OrgName, UserName, Password, FirstName, LastName, Email) {
+    //request made to Auth API to register an org and org owner
+    
+    //request
+    let authResponse = await axios.post(host + "Auth/RegisterOrg",
+    {//json payload
+        OrgName: OrgName,
+        UserName:UserName,
+        Password:Password,
+        FirstName:FirstName,
+        LastName:LastName,
+        Email:Email
+    }).then(function(response) {
+        //response from server
+        return response.data
+    }).catch(function(error){
+        //if error happens
+        return error
+    }); 
+    //return response
+    return authResponse
+}
+
+module.exports = {LoginReq, OrgRegisterReq}

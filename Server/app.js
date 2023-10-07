@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const {Login} = require('./Auth/AuthRoutes')
+const {Login, RegisterOrg} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken} = require('./Auth/AuthMiddleware')
 
@@ -36,6 +36,7 @@ app.get("/RegOrgSuccess", function(req, res){
 
 //Post routs
 app.post("/Login", Login)//route that logs user in
+app.post("/RegisterOrg", RegisterOrg)//route that logs user in
 
 app.listen(port, ()=>{//server listens on port 3000
     console.log("website hosted on port " + port)
