@@ -34,6 +34,12 @@ app.get("/RegOrgSuccess", function(req, res){
     //Renders the register success page after registering an organization
     res.render("RegOrgSuccess")
 })
+app.get("/SignOut", function(req, res){
+    //Signs user out
+    res.clearCookie("Token")
+    res.clearCookie("User")
+    res.redirect("/Login")
+})
 
 //Post routs
 app.post("/Login", Login)//route that logs user in
