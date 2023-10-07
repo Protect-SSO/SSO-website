@@ -19,7 +19,8 @@ app.use('/Partials',express.static(path.join(__dirname, '../Client/Partials')));
 //Get routs
 app.get('/', verifyToken,(req,res)=>{
     //Renders the dashboard page
-    res.render("dashboard")
+    const User = req.cookies.User
+    res.render("dashboard",{User})
 })
 app.get("/Login", function(req, res){
     //Renders the Login page
