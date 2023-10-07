@@ -14,6 +14,7 @@ async function Login(req, res){
     if(value.Login == "True"){
         //if Login equatls true
         res.cookie('Token', 'testVal');
+        res.cookie('User', value.User);
         return res.redirect("/")
     }else{
         //if login was a failure
