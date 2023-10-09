@@ -22,6 +22,11 @@ app.get('/', verifyToken,(req,res)=>{
     const User = req.cookies.User
     res.render("dashboard",{User})
 })
+app.get('/RegisterUser', verifyToken,(req,res)=>{
+    //Renders the dashboard page
+    const User = req.cookies.User
+    res.render("RegisterUser",{User})
+})
 app.get("/Login", function(req, res){
     //Renders the Login page
     res.render("Login")

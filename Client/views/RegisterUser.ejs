@@ -7,12 +7,13 @@
     <%- include('../Partials/BootStrap.ejs') %>
 </head>
 <body>
+    <%- include('../Partials/MainNav.ejs') %>
     <form action="/RegisterUser" method="post">
-        <input type="text" name="UserName">
-        <input type="text" name="Password">
-        <input type="text" name="FirstName">
-        <input type="text" name="LastName">
-        <input type="text" name="Email">
+        <input type="text" name="UserName" placeholder="UserName">
+        <input type="text" name="Password" placeholder="Password">
+        <input type="text" name="FirstName" placeholder="First Name">
+        <input type="text" name="LastName" placeholder="Last Name">
+        <input type="text" name="Email" placeholder="Email">
         <Button type="submit">Register</Button>
     </form>
 </body>
