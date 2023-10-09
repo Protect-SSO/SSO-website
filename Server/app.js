@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
-const {verifyToken} = require('./Auth/AuthMiddleware')
+const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
 
 const port = "3000"
 const app = express();
@@ -16,17 +16,19 @@ app.set('views', path.join(__dirname, '../Client/views'));//show express the vie
 app.use('/images', express.static(path.join(__dirname, '../Client/images')));
 app.use('/Partials',express.static(path.join(__dirname, '../Client/Partials')));
 
-//Get routs
+//Protected Get routes
 app.get('/', verifyToken,(req,res)=>{
     //Renders the dashboard page
     const User = req.cookies.User
     res.render("dashboard",{User})
 })
-app.get('/RegisterUser', verifyToken,(req,res)=>{
+app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
     //Renders the dashboard page
     const User = req.cookies.User
     res.render("RegisterUser",{User})
 })
+
+//get routes
 app.get("/Login", function(req, res){
     //Renders the Login page
     res.render("Login")
