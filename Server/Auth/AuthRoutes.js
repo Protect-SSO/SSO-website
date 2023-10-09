@@ -1,4 +1,4 @@
-const {LoginReq, OrgRegisterReq} = require('./AuthRequest')
+const {LoginReq, OrgRegisterReq, UserRegisterReq} = require('./AuthRequest')
 
 
 async function Login(req, res){
@@ -46,4 +46,24 @@ async function RegisterOrg(req, res){
     }
 }
 
-module.exports={Login, RegisterOrg}
+async function RegisterUser(req,res){
+    let UserName = req.body.UserName
+    let Password = req.body.Password
+    let FirstName = req.body.FirstName
+    let LastName = req.body.LastName
+    let Email = req.body.Email
+
+    let value = await UserRegisterReq(UserName, Password, FirstName, LastName, Email)
+    console.log(value)
+    
+    if(value.Registered == "True"){
+        //if register was successful
+        return res.redirect("/RegUserSuccess")
+    }else{
+        //if register was a failure
+        return res.render("RegisterUser")
+    }
+}
+
+module.exports={Login, RegisterOrg, RegisterUser}
+
