@@ -52,8 +52,8 @@ async function RegisterUser(req,res){
     let FirstName = req.body.FirstName
     let LastName = req.body.LastName
     let Email = req.body.Email
-    let Org = req.cookies.User.Org
-    let value = await UserRegisterReq(UserName, Password, FirstName, LastName, Email, Org)
+    let OrgName = req.cookies.User.OrgName
+    let value = await UserRegisterReq(UserName, Password, FirstName, LastName, Email, OrgName)
     console.log(value)
     
     if(value.Registered == "True"){
