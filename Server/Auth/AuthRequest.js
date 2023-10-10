@@ -49,7 +49,7 @@ async function OrgRegisterReq(OrgName, UserName, Password, FirstName, LastName, 
     return authResponse
 }
 
-async function UserRegisterReq(UserName, Password, FirstName, LastName, Email) {
+async function UserRegisterReq(UserName, Password, FirstName, LastName, Email, Org) {
     //request made to Auth API to register an org and org owner
     
     //request
@@ -59,7 +59,8 @@ async function UserRegisterReq(UserName, Password, FirstName, LastName, Email) {
         Password:Password,
         FirstName:FirstName,
         LastName:LastName,
-        Email:Email
+        Email:Email,
+        Org:Org
     }).then(function(response) {
         //response from server
         return response.data
