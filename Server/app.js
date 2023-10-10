@@ -41,6 +41,10 @@ app.get("/RegOrgSuccess", function(req, res){
     //Renders the register success page after registering an organization
     res.render("RegOrgSuccess")
 })
+app.get("/RegUserSuccess", function(req, res){
+    //Renders the register success page after registering an organization
+    res.render("RegUserSuccess")
+})
 app.get("/SignOut", function(req, res){
     //Signs user out
     res.clearCookie("Token")
