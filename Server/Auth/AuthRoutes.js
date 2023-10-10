@@ -61,7 +61,8 @@ async function RegisterUser(req,res){
         return res.redirect("/RegUserSuccess")
     }else{
         //if register was a failure
-        return res.render("RegisterUser")
+        const User = req.cookies.User
+        return res.render("RegisterUser",{User} )
     }
 }
 
