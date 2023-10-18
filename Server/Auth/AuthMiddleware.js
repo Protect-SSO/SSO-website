@@ -1,3 +1,4 @@
+const {DecodeToken} = require('./AuthRequest');
 
 function verifyAccountType(req,res,next){
     //verify if user is owner or admin
@@ -6,9 +7,10 @@ function verifyAccountType(req,res,next){
     }next()
 }
 
-function verifyToken(req,res,next){
+async function verifyToken(req,res,next){
     //verify if token is on users browser
-    if(!req.cookies.Token){
+    let response = await DecodeToken(req.cookies.Token)
+    if(response.error == "Invalid token" || response.error == "expired"){
         return res.redirect("/Login")
     }next()
 }

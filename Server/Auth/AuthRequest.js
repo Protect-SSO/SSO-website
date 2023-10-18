@@ -72,4 +72,22 @@ async function UserRegisterReq(UserName, Password, FirstName, LastName, Email, O
     return authResponse
 }
 
-module.exports = {LoginReq, OrgRegisterReq, UserRegisterReq}
+async function DecodeToken(Token) {
+    //
+    
+    //
+    let authResponse = await axios.post(host + "Token/decode_token",
+    {//
+        Token:Token,
+        
+    }).then(function(response) {
+        //
+        return response.data
+    }).catch(function(error){
+        //
+        return error
+    }); 
+    //
+    return authResponse
+}
+module.exports = {LoginReq, OrgRegisterReq, UserRegisterReq,DecodeToken}
