@@ -13,7 +13,7 @@ async function Login(req, res){
     console.log(value.Login)
     if(value.Login == "True"){
         //if Login equatls true
-        res.cookie('Token', 'testVal');
+        res.cookie('Token', value.Token);
         res.cookie('User', value.User);
         return res.redirect("/")
     }else{
