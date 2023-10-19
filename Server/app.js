@@ -3,6 +3,7 @@ const path = require('path');
 const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
+const {GetUserApps} = require('./ApplicationServices/AppDatabaseQuery')
 
 const port = "3000"
 const app = express();
@@ -17,10 +18,11 @@ app.use('/images', express.static(path.join(__dirname, '../Client/images')));
 app.use('/Partials',express.static(path.join(__dirname, '../Client/Partials')));
 
 //Protected Get routes
-app.get('/', verifyToken,(req,res)=>{
+app.get('/', verifyToken, async(req,res)=>{
     //Renders the dashboard page
     const User = req.cookies.User
-    res.render("dashboard",{User})
+    let Apps = await GetUserApps(User.UserName)
+    res.render("dashboard",{User,Apps})
 })
 app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
     //Renders the dashboard page
