@@ -25,4 +25,22 @@ async function GetUserAppsReq(username) {
     return authResponse
 }
 
-module.exports = {GetUserAppsReq}
+async function getRoute(AppName) {
+    //request made to Auth API get route of an app
+
+    //request
+    let response = await axios.post(host + "AppServices/getRoute",
+    {//json payload
+        AppName:AppName
+    }).then(function(response) {
+        //response from server
+        return response.data
+    }).catch(function(error){
+        //if error happens
+        return error
+    }); 
+    //return response
+    return response
+}
+
+module.exports = {GetUserAppsReq, getRoute}

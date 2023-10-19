@@ -15,14 +15,11 @@
             <% for (var i=0; i < Apps.length ; i++) { %>
                 <div class="col-md-auto">
         
-                    <form action=""method="get">
+                    <form action="/Redirect/<%=Apps[i][0]%>"method="get">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><%= Apps[i][0] %></h5>
-                                <form action="" method="">
-                                    <button class="btn btn-dark" type="submit">Redirect</button>
-                                </form>
-                        
+                                <button class="btn btn-dark" type="submit">Redirect</button>
                             </div>
                         </div>
                     </form>

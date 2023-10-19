@@ -4,6 +4,7 @@ const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
 const {GetUserApps} = require('./ApplicationServices/AppDatabaseQuery')
+const {Redirect} = require('./ApplicationServices/AppRoutes')
 
 const port = "3000"
 const app = express();
@@ -55,9 +56,7 @@ app.get("/SignOut", function(req, res){
 })
 
 
-app.get("/proj",function(req, res){
-    res.redirect("http://127.0.0.1:3005/home/" + req.cookies.Token)
-})
+app.get("/Redirect/:AppName", Redirect)
 
 
 //Post routs
