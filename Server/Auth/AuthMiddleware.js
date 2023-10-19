@@ -10,7 +10,7 @@ function verifyAccountType(req,res,next){
 async function verifyToken(req,res,next){
     //verify if token is on users browser
     let response = await DecodeToken(req.cookies.Token)
-    if(response.error == "Invalid token" || response.error == "expired"){
+    if(response.error == "Invalid token" || response.error == "expired" || !req.cookies.Token){
         return res.redirect("/Login")
     }next()
 }

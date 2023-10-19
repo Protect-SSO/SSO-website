@@ -52,6 +52,12 @@ app.get("/SignOut", function(req, res){
     res.redirect("/Login")
 })
 
+
+app.get("/proj",function(req, res){
+    res.redirect("http://127.0.0.1:3005/home/" + req.cookies.Token)
+})
+
+
 //Post routs
 app.post("/Login", Login)//route that logs user in
 app.post("/RegisterOrg", RegisterOrg)//route that logs org in
