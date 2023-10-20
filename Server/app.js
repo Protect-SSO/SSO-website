@@ -30,6 +30,8 @@ app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
     const User = req.cookies.User
     res.render("RegisterUser",{User})
 })
+app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
+
 
 //get routes
 app.get("/Login", function(req, res){
@@ -56,7 +58,7 @@ app.get("/SignOut", function(req, res){
 })
 
 
-app.get("/Redirect/:AppName", Redirect)
+
 
 
 //Post routs
