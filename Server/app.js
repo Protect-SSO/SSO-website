@@ -36,7 +36,8 @@ app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app f
 //get routes
 app.get("/Login", function(req, res){
     //Renders the Login page
-    res.render("Login")
+    const error = ""
+    return res.render("Login",{error})
 })
 app.get("/RegisterOrg", function(req, res){
     //Renders the Organization register page
