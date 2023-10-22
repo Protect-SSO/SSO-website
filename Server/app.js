@@ -3,6 +3,8 @@ const path = require('path');
 const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
+const {GetUserApps} = require('./ApplicationServices/AppDatabaseQuery')
+const {Redirect} = require('./ApplicationServices/AppRoutes')
 
 const port = "3000"
 const app = express();
@@ -17,21 +19,25 @@ app.use('/images', express.static(path.join(__dirname, '../Client/images')));
 app.use('/Partials',express.static(path.join(__dirname, '../Client/Partials')));
 
 //Protected Get routes
-app.get('/', verifyToken,(req,res)=>{
+app.get('/', verifyToken, async(req,res)=>{
     //Renders the dashboard page
     const User = req.cookies.User
-    res.render("dashboard",{User})
+    let Apps = await GetUserApps(User.UserName)
+    res.render("dashboard",{User,Apps})
 })
 app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
     //Renders the dashboard page
     const User = req.cookies.User
     res.render("RegisterUser",{User})
 })
+app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
+
 
 //get routes
 app.get("/Login", function(req, res){
     //Renders the Login page
-    res.render("Login")
+    const error = ""
+    return res.render("Login",{error})
 })
 app.get("/RegisterOrg", function(req, res){
     //Renders the Organization register page
@@ -51,6 +57,10 @@ app.get("/SignOut", function(req, res){
     res.clearCookie("User")
     res.redirect("/Login")
 })
+
+
+
+
 
 //Post routs
 app.post("/Login", Login)//route that logs user in

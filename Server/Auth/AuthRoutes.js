@@ -18,7 +18,8 @@ async function Login(req, res){
         return res.redirect("/")
     }else{
         //if login was a failure
-        return res.render("Login")
+        const error = "Problem with credentials"
+        return res.render("Login",{error})
     }
 }
 
