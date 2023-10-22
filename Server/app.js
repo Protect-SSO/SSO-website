@@ -30,6 +30,11 @@ app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
     const User = req.cookies.User
     res.render("RegisterUser",{User})
 })
+app.get('/RegisterApp', verifyToken,(req,res)=>{
+    //Renders the dashboard page
+    const User = req.cookies.User
+    res.render("RegisterApp",{User})
+})
 app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
 
 
