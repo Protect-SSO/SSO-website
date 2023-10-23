@@ -6,7 +6,7 @@ const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
 const {GetUserApps,GetApps} = require('./ApplicationServices/AppDatabaseQuery')
 const {Redirect, RegisterApp, RequestApp} = require('./ApplicationServices/AppRoutes')
 
-const port = "3002"
+const port = "3000"
 const app = express();
 
 //middle ware funtions
