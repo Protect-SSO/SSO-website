@@ -1,4 +1,4 @@
-const {getRoute, RegisterAppReq} = require('./AppRequests')
+const {getRoute, RegisterAppReq, RequestAppReq} = require('./AppRequests')
 
 async function Redirect(req,res){
     let AppName = req.params.AppName;
@@ -23,5 +23,17 @@ async function RegisterApp(req,res){
         return res.render("RegisterApp",{User} )
     }
 }
+async function RequestApp(req,res){
+    let AppName = req.params.AppName;
+    let OrgName = req.cookies.User.OrgName;
+    let UserName = req.cookies.User.UserName;
+    
+    let response = await RequestAppReq(AppName,UserName,OrgName)
+    console.log(response.Requested)
+    
+    //if register was successful
+    return res.redirect("/RequestApp")
+    
+}
 
-module.exports = {Redirect, RegisterApp}
+module.exports = {Redirect, RegisterApp, RequestApp}

@@ -3,10 +3,10 @@ const path = require('path');
 const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
-const {GetUserApps} = require('./ApplicationServices/AppDatabaseQuery')
-const {Redirect, RegisterApp} = require('./ApplicationServices/AppRoutes')
+const {GetUserApps,GetApps} = require('./ApplicationServices/AppDatabaseQuery')
+const {Redirect, RegisterApp, RequestApp} = require('./ApplicationServices/AppRoutes')
 
-const port = "3000"
+const port = "3002"
 const app = express();
 
 //middle ware funtions
@@ -32,6 +32,31 @@ app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
 app.get('/RegisterApp', verifyToken,(req,res)=>{
     const User = req.cookies.User
     res.render("RegisterApp",{User})
+})
+app.get('/RequestApp', verifyToken,async(req,res)=>{
+    const User = req.cookies.User
+    let Apps = await GetApps(User.OrgName)
+    let OwnedApps = await GetUserApps(User.UserName)
+    
+    for(let loop = 0; loop < Apps.length; loop++){
+        for(let loop2 = 0; loop2 < OwnedApps.length; loop2++){
+            if(Apps[loop][0] == OwnedApps[loop2][0]){
+                console.log("yes")
+                var index = Apps[loop].indexOf(OwnedApps[loop2][0]);
+                if (index !== -1) {
+                    Apps[loop].splice(index, 1);
+                }
+            }else{
+                console.log("false")
+            }
+        }
+        
+    }
+    Apps = Apps.filter(e => e.length != 0)
+    console.log(OwnedApps[0])
+    console.log(Apps)
+    
+    res.render("RequestApp",{User, Apps})
 })
 app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
 app.get("/RegUserSuccess",verifyToken, function(req, res){
@@ -79,9 +104,10 @@ app.get("/RegOrgSuccess", function(req, res){
 
 //Post routs
 app.post("/Login", Login)//route that logs user in
-app.post("/RegisterOrg", RegisterOrg)//route that logs org in
-app.post("/RegisterUser", verifyToken, RegisterUser)//route that logs user in
-app.post("/RegisterApp", verifyToken, RegisterApp)//route that logs user in
+app.post("/RegisterOrg", RegisterOrg)//
+app.post("/RegisterUser", verifyToken, RegisterUser)//
+app.post("/RegisterApp", verifyToken, RegisterApp)//
+app.post("/RequestApp/:AppName", verifyToken, RequestApp)//
 
 app.listen(port, ()=>{//server listens on port 3000
     console.log("website hosted on port " + port)
