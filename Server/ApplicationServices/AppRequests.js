@@ -43,4 +43,24 @@ async function getRoute(AppName) {
     return response
 }
 
-module.exports = {GetUserAppsReq, getRoute}
+async function RegisterAppReq(AppName, RedirectURL, OrgName) {
+    //request made to Auth API to register an org and org owner
+    
+    //request
+    let Response = await axios.post(host + "AppServices/RegisterApp",
+    {//json payload
+        AppName:AppName,
+        RedirectURL:RedirectURL,
+        OrgName:OrgName
+    }).then(function(response) {
+        //response from server
+        return response.data
+    }).catch(function(error){
+        //if error happens
+        return error
+    }); 
+    //return response
+    return Response
+}
+
+module.exports = {GetUserAppsReq, getRoute, RegisterAppReq}

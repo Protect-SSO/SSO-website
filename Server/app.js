@@ -4,7 +4,7 @@ const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
 const {GetUserApps} = require('./ApplicationServices/AppDatabaseQuery')
-const {Redirect} = require('./ApplicationServices/AppRoutes')
+const {Redirect, RegisterApp} = require('./ApplicationServices/AppRoutes')
 
 const port = "3000"
 const app = express();
@@ -26,17 +26,24 @@ app.get('/', verifyToken, async(req,res)=>{
     res.render("dashboard",{User,Apps})
 })
 app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
-    //Renders the dashboard page
     const User = req.cookies.User
     res.render("RegisterUser",{User})
 })
 app.get('/RegisterApp', verifyToken,(req,res)=>{
-    //Renders the dashboard page
     const User = req.cookies.User
     res.render("RegisterApp",{User})
 })
 app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
-
+app.get("/RegUserSuccess",verifyToken, function(req, res){
+    //Renders the register success page after registering a user
+    const User = req.cookies.User
+    res.render("RegUserSuccess",{User})
+})
+app.get("/RegAppSuccess",verifyToken, function(req, res){
+    //Renders the register success page after registering an App
+    const User = req.cookies.User
+    res.render("RegisterAppSuccess",{User})
+})
 
 //get routes
 app.get("/Login", function(req, res){
@@ -62,7 +69,10 @@ app.get("/SignOut", function(req, res){
     res.clearCookie("User")
     res.redirect("/Login")
 })
-
+app.get("/RegOrgSuccess", function(req, res){
+    //Renders the register success page after registering an organization
+    res.render("RegOrgSuccess")
+})
 
 
 
@@ -70,7 +80,8 @@ app.get("/SignOut", function(req, res){
 //Post routs
 app.post("/Login", Login)//route that logs user in
 app.post("/RegisterOrg", RegisterOrg)//route that logs org in
-app.post("/RegisterUser", RegisterUser)//route that logs user in
+app.post("/RegisterUser", verifyToken, RegisterUser)//route that logs user in
+app.post("/RegisterApp", verifyToken, RegisterApp)//route that logs user in
 
 app.listen(port, ()=>{//server listens on port 3000
     console.log("website hosted on port " + port)
