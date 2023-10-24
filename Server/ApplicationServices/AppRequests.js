@@ -133,4 +133,23 @@ async function GetOrgRequestsReq(OrgName) {
     //return response
     return Response
 }
-module.exports = {GetUserAppsReq, getRoute, RegisterAppReq,GetAppsReq, RequestAppReq, GetRequestsReq, GetOrgRequestsReq}
+async function AcceptRequestReq(AppName,UserName,OrgName) {
+    //request made to Auth API to register an org and org owner
+    
+    //request
+    let Response = await axios.post(host + "AppServices/AcceptRequest",
+    {//json payload
+        AppName:AppName,
+        UserName:UserName,
+        OrgName:OrgName
+    }).then(function(response) {
+        //response from server
+        return response.data
+    }).catch(function(error){
+        //if error happens
+        return error
+    }); 
+    //return response
+    return Response
+}
+module.exports = {GetUserAppsReq, getRoute, RegisterAppReq,GetAppsReq, RequestAppReq, GetRequestsReq, GetOrgRequestsReq, AcceptRequestReq}

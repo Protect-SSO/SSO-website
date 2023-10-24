@@ -1,4 +1,4 @@
-const {getRoute, RegisterAppReq, RequestAppReq} = require('./AppRequests')
+const {getRoute, RegisterAppReq, RequestAppReq, AcceptRequestReq} = require('./AppRequests')
 
 async function Redirect(req,res){
     let AppName = req.params.AppName;
@@ -29,11 +29,21 @@ async function RequestApp(req,res){
     let UserName = req.cookies.User.UserName;
     
     let response = await RequestAppReq(AppName,UserName,OrgName)
-    console.log(response.Requested)
     
     //if register was successful
     return res.redirect("/RequestApp")
     
 }
+async function AcceptRequest(req,res){
+    let AppName = req.params.AppName;
+    let UserName = req.params.UserName;
+    let OrgName = req.cookies.User.OrgName;
+    
+    let response = await AcceptRequestReq(AppName,UserName,OrgName)
+    
+    //if register was successful
+    return res.redirect("/SupportDash")
+    
+}
 
-module.exports = {Redirect, RegisterApp, RequestApp}
+module.exports = {Redirect, RegisterApp, RequestApp, AcceptRequest}

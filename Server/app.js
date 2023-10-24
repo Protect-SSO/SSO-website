@@ -4,7 +4,7 @@ const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType, IfNotSupport} = require('./Auth/AuthMiddleware')
 const {GetUserApps,GetApps, GetRequests, GetOrgRequests} = require('./ApplicationServices/AppDatabaseQuery')
-const {Redirect, RegisterApp, RequestApp} = require('./ApplicationServices/AppRoutes')
+const {Redirect, RegisterApp, RequestApp, AcceptRequest} = require('./ApplicationServices/AppRoutes')
 
 const port = "3000"
 const app = express();
@@ -29,7 +29,6 @@ app.get('/SupportDash', verifyToken, IfNotSupport, async(req,res)=>{
     //Renders the dashboard page
     const User = req.cookies.User
     let requestedApps = await GetOrgRequests(User.OrgName)
-    console.log(GetOrgRequests)
     res.render("SupportDash",{User,requestedApps})
 })
 app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
@@ -49,13 +48,10 @@ app.get('/RequestApp', verifyToken,async(req,res)=>{
     for(let loop = 0; loop < Apps.length; loop++){
         for(let loop2 = 0; loop2 < OwnedApps.length; loop2++){
             if(Apps[loop][0] == OwnedApps[loop2][0]){
-                console.log("yes")
                 var index = Apps[loop].indexOf(OwnedApps[loop2][0]);
                 if (index !== -1) {
                     Apps[loop].splice(index, 1);
                 }
-            }else{
-                console.log("false")
             }
         }
         
@@ -63,21 +59,15 @@ app.get('/RequestApp', verifyToken,async(req,res)=>{
     for(let loop = 0; loop < Apps.length; loop++){
         for(let loop2 = 0; loop2 < requestedApps.length; loop2++){
             if(Apps[loop][0] == requestedApps[loop2][0]){
-                console.log("yes")
                 var index = Apps[loop].indexOf(requestedApps[loop2][0]);
                 if (index !== -1) {
                     Apps[loop].splice(index, 1);
                 }
-            }else{
-                console.log("false")
             }
         }
         
     }
     Apps = Apps.filter(e => e.length != 0)
-    console.log(OwnedApps)
-    console.log(Apps)
-    console.log(requestedApps)
     res.render("RequestApp",{User, Apps, requestedApps})
 })
 app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
@@ -130,6 +120,7 @@ app.post("/RegisterOrg", RegisterOrg)//
 app.post("/RegisterUser", verifyToken, RegisterUser)//
 app.post("/RegisterApp", verifyToken, RegisterApp)//
 app.post("/RequestApp/:AppName", verifyToken, RequestApp)//
+app.post("/AcceptRequest/:AppName/:UserName", verifyToken, AcceptRequest)//
 
 app.listen(port, ()=>{//server listens on port 3000
     console.log("website hosted on port " + port)
