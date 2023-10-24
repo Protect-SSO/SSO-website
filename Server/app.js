@@ -3,7 +3,7 @@ const path = require('path');
 const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
 const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
-const {GetUserApps,GetApps} = require('./ApplicationServices/AppDatabaseQuery')
+const {GetUserApps,GetApps, GetRequests} = require('./ApplicationServices/AppDatabaseQuery')
 const {Redirect, RegisterApp, RequestApp} = require('./ApplicationServices/AppRoutes')
 
 const port = "3000"
@@ -37,7 +37,8 @@ app.get('/RequestApp', verifyToken,async(req,res)=>{
     const User = req.cookies.User
     let Apps = await GetApps(User.OrgName)
     let OwnedApps = await GetUserApps(User.UserName)
-    
+    let requestedApps = await GetRequests(User.UserName)
+
     for(let loop = 0; loop < Apps.length; loop++){
         for(let loop2 = 0; loop2 < OwnedApps.length; loop2++){
             if(Apps[loop][0] == OwnedApps[loop2][0]){
@@ -52,11 +53,25 @@ app.get('/RequestApp', verifyToken,async(req,res)=>{
         }
         
     }
+    for(let loop = 0; loop < Apps.length; loop++){
+        for(let loop2 = 0; loop2 < requestedApps.length; loop2++){
+            if(Apps[loop][0] == requestedApps[loop2][0]){
+                console.log("yes")
+                var index = Apps[loop].indexOf(requestedApps[loop2][0]);
+                if (index !== -1) {
+                    Apps[loop].splice(index, 1);
+                }
+            }else{
+                console.log("false")
+            }
+        }
+        
+    }
     Apps = Apps.filter(e => e.length != 0)
-    console.log(OwnedApps[0])
+    console.log(OwnedApps)
     console.log(Apps)
-    
-    res.render("RequestApp",{User, Apps})
+    console.log(requestedApps)
+    res.render("RequestApp",{User, Apps, requestedApps})
 })
 app.get("/Redirect/:AppName",verifyToken, Redirect)//redirects a user to a app from dashboard
 app.get("/RegUserSuccess",verifyToken, function(req, res){

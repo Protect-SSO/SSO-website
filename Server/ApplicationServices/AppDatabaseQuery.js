@@ -1,4 +1,4 @@
-const {GetUserAppsReq,GetAppsReq} = require('./AppRequests')
+const {GetUserAppsReq,GetAppsReq, GetRequestsReq} = require('./AppRequests')
 
 async function GetUserApps (UserName){
     let response = await GetUserAppsReq(UserName)
@@ -10,5 +10,11 @@ async function GetApps (OrgName){
 
     return response
 }
+async function GetRequests (UserName){
+    let response = await GetRequestsReq(UserName)
 
-module.exports = {GetUserApps,GetApps}
+    return response
+}
+
+
+module.exports = {GetUserApps,GetApps, GetRequests}

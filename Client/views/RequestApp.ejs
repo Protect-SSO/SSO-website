@@ -25,7 +25,19 @@
                     </form>
                 </div>
             <% } %>
+            <% for (var i=0; i < requestedApps.length ; i++) { %>
+                <div class="col-md-auto py-4">
         
+                    
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= requestedApps[i][0] %></h5>
+                                <button disabled class="btn btn-dark" type="submit">Registered</button>
+                            </div>
+                        </div>
+                    
+                </div>
+            <% } %>
         </div>
     </div>
 

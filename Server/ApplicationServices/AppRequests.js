@@ -99,5 +99,21 @@ async function RequestAppReq(AppName, UserName, OrgName) {
     //return response
     return Response
 }
-
-module.exports = {GetUserAppsReq, getRoute, RegisterAppReq,GetAppsReq, RequestAppReq}
+async function GetRequestsReq(UserName) {
+    //request made to Auth API to register an org and org owner
+    
+    //request
+    let Response = await axios.post(host + "AppServices/GetRequests",
+    {//json payload
+        UserName:UserName
+    }).then(function(response) {
+        //response from server
+        return response.data
+    }).catch(function(error){
+        //if error happens
+        return error
+    }); 
+    //return response
+    return Response
+}
+module.exports = {GetUserAppsReq, getRoute, RegisterAppReq,GetAppsReq, RequestAppReq, GetRequestsReq}
