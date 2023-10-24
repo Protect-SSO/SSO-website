@@ -13,8 +13,17 @@ async function Login(req, res){
     console.log(value.Login)
     if(value.Login == "True"){
         //if Login equatls true
+        
         res.cookie('Token', value.Token);
         res.cookie('User', value.User);
+        
+        
+        if(value.User.AccountType == "Support"){
+            return res.redirect('/SupportDash')
+        }
+        
+        
+        
         return res.redirect("/")
     }else{
         //if login was a failure

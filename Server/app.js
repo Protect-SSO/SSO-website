@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const {Login, RegisterOrg, RegisterUser} = require('./Auth/AuthRoutes')
 const cookieParser = require('cookie-parser')
-const {verifyToken, verifyAccountType} = require('./Auth/AuthMiddleware')
-const {GetUserApps,GetApps, GetRequests} = require('./ApplicationServices/AppDatabaseQuery')
+const {verifyToken, verifyAccountType, IfNotSupport} = require('./Auth/AuthMiddleware')
+const {GetUserApps,GetApps, GetRequests, GetOrgRequests} = require('./ApplicationServices/AppDatabaseQuery')
 const {Redirect, RegisterApp, RequestApp} = require('./ApplicationServices/AppRoutes')
 
 const port = "3000"
@@ -24,6 +24,13 @@ app.get('/', verifyToken, async(req,res)=>{
     const User = req.cookies.User
     let Apps = await GetUserApps(User.UserName)
     res.render("dashboard",{User,Apps})
+})
+app.get('/SupportDash', verifyToken, IfNotSupport, async(req,res)=>{
+    //Renders the dashboard page
+    const User = req.cookies.User
+    let requestedApps = await GetOrgRequests(User.OrgName)
+    console.log(GetOrgRequests)
+    res.render("SupportDash",{User,requestedApps})
 })
 app.get('/RegisterUser', verifyToken, verifyAccountType,(req,res)=>{
     const User = req.cookies.User

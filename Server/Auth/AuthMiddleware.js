@@ -15,4 +15,11 @@ async function verifyToken(req,res,next){
     }next()
 }
 
-module.exports = {verifyToken, verifyAccountType}
+function IfNotSupport(req,res,next){
+    //verify if user is owner or admin
+    if(req.cookies.User.AccountType != "Support"){
+        return res.redirect('/Login')
+    }next()
+}
+
+module.exports = {verifyToken, verifyAccountType, IfNotSupport}
