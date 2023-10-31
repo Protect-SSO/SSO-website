@@ -7,18 +7,30 @@
     <%- include('../Partials/BootStrap.ejs') %>
 </head>
 <body>
-    <form action="/RegisterOrg" method="post">
-        <input type="text" name="OrgName" placeholder="Name of Organization">
-        <br>
-        <label for="">Org Owner</label>
-        <br>
-        <input type="text" name="UserName" placeholder="Owner User Name">
-        <input type="text" name="Password" placeholder="Password">
-        <input type="text" name="FirstName" placeholder="First Name">
-        <input type="text" name="LastName" placeholder="Password">
-        <input type="text" name="Email" placeholder="Email">
-        <br>
-        <button type="submit">Register</button>
-    </form>
+    
+    <div class="text-center mx-auto mt-1 pt-5" style="width: 480px;">
+        <div class="text-center mx-auto mt-1 pt-5" style="width: 480px;">
+                
+            <h2 class="h3 mb-3 front-weight-normal">Organization Registration</h2>
+            <form action="/RegisterOrg" method="post">
+                <input class="mt-1 form-control" type="text" name="OrgName" placeholder="Name of Organization">
+                <br>
+                <label for="">Org Owner</label>
+                <br>
+                <input class="mt-1 form-control" type="text" name="UserName" placeholder="Owner User Name">
+                <input class="mt-1 form-control" type="text" name="Password" placeholder="Password">
+                <input class="mt-1 form-control" type="text" name="FirstName" placeholder="First Name">
+                <input class="mt-1 form-control" type="text" name="LastName" placeholder="Password">
+                <input class="mt-1 form-control" type="text" name="Email" placeholder="Email">
+                <br>
+                <div class="mt-3">
+                    <button class="form-control btn btn-lg bg-dark btn-dark btn-block" type="submit">Register</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+
 </body>
 </html>

@@ -9,11 +9,20 @@
 <body>
     <%- include('../Partials/MainNav.ejs') %>
 
-    <form action="/RegisterApp" method="post">
-        <input type="text" name="AppName" placeholder="Application Name">
-        <input type="text" name="RedirectURL" placeholder="Redirect URL">
-        <button type="submit">Register</button>
-    </form>
+    <div class="text-center mx-auto mt-1 pt-5" style="width: 480px;">
+        <div class="text-center mx-auto mt-1 pt-5" style="width: 480px;">
+            <h2 class="h3 mb-3 front-weight-normal">Application Registration</h2>
+            <form action="/RegisterApp" method="post">
+                <input class="mt-1 form-control" type="text" name="AppName" placeholder="Application Name" required>
+                <input class="mt-1 form-control" type="text" name="RedirectURL" placeholder="Redirect URL" required>
+                <div class="mt-3">
+                    <button class="form-control btn btn-lg bg-dark btn-dark btn-block" type="submit">Register</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
 
     <%- include('../Partials/Footer.ejs') %>
 </body>
