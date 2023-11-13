@@ -12,11 +12,11 @@
         <div class="text-center mx-auto mt-1 pt-5" style="width: 480px;">
             <h2 class="h3 mb-3 front-weight-normal">User Registration</h2>
             <form action="/RegisterUser" method="post">
-                <input class="mt-1 form-control" type="text" name="UserName" placeholder="UserName">
-                <input class="mt-1 form-control" type="text" name="Password" placeholder="Password">
-                <input class="mt-1 form-control"type="text" name="FirstName" placeholder="First Name">
-                <input class="mt-1 form-control" type="text" name="LastName" placeholder="Last Name">
-                <input class="mt-1 form-control" type="text" name="Email" placeholder="Email">
+                <input class="mt-1 form-control" type="text" name="UserName" placeholder="UserName" required>
+                <input class="mt-1 form-control" type="password" name="Password" placeholder="Password" required>
+                <input class="mt-1 form-control"type="text" name="FirstName" placeholder="First Name" required>
+                <input class="mt-1 form-control" type="text" name="LastName" placeholder="Last Name" required>
+                <input class="mt-1 form-control" type="text" name="Email" placeholder="Email" required>
                 <div class="mt-3">
                     <Button class="form-control btn btn-lg bg-dark btn-dark btn-block" type="submit">Register</Button>
                 </div>
